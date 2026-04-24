@@ -1,0 +1,15 @@
+{
+  "component_data": {
+    "target": {
+      "deployment_env": "prod",
+      "target_kind": "customer"
+    }
+  },
+  "components": [
+    "target"
+  ],
+  "created": "2026-04-24T19:56:57Z",
+  "id": "prod-deploy",
+  "label": "Production",
+  "updated": "2026-04-24T19:56:57Z"
+}

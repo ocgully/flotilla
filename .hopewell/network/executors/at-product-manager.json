@@ -1,0 +1,17 @@
+{
+  "component_data": {
+    "agent": {
+      "agent_id": "@product-manager",
+      "kind": "llm",
+      "role": "backlog + live-ops tuning"
+    }
+  },
+  "components": [
+    "agent",
+    "queue"
+  ],
+  "created": "2026-04-24T19:56:57Z",
+  "id": "@product-manager",
+  "label": "Product Manager",
+  "updated": "2026-04-24T19:56:57Z"
+}

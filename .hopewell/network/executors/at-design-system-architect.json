@@ -1,0 +1,17 @@
+{
+  "component_data": {
+    "agent": {
+      "agent_id": "@design-system-architect",
+      "kind": "llm",
+      "role": "widget catalog + UI consistency"
+    }
+  },
+  "components": [
+    "agent",
+    "queue"
+  ],
+  "created": "2026-04-24T19:56:57Z",
+  "id": "@design-system-architect",
+  "label": "Design System Architect",
+  "updated": "2026-04-24T19:56:57Z"
+}

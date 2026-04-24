@@ -1,0 +1,45 @@
+# .hopewell/config.toml  —  edit freely.
+
+[project]
+name = "agentfactory-showcase"
+id_prefix = "HW"
+id_pad = 4
+
+[components]
+enabled = [
+  "work-item",
+  "deliverable",
+  "user-facing",
+  "internal",
+  "defect",
+  "risk",
+  "debt",
+  "test",
+  "documentation",
+  "screenshot",
+  "design",
+  "code-map",
+  "grouping",
+  "deployment-target",
+  "approval-gate",
+  "flagged",
+  "retriable",
+  "github-issue",
+]
+
+[orchestrator]
+max_parallel = 4
+
+[github]
+repo = ""
+default_components = ["work-item"]
+sync_interval_minutes = 0
+token_env = "GITHUB_TOKEN"
+
+[github.label_to_components]
+
+[coordination]
+mode = "auto"               # auto | always | never
+base_branch = "main"
+stale_claim_days = 14
+# minimum_version = "0.5.2"    # uncomment to pin a floor

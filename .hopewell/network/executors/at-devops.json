@@ -1,0 +1,17 @@
+{
+  "component_data": {
+    "agent": {
+      "agent_id": "@devops",
+      "kind": "llm",
+      "role": "CI/CD + deploy + live-ops infra"
+    }
+  },
+  "components": [
+    "agent",
+    "queue"
+  ],
+  "created": "2026-04-24T19:56:57Z",
+  "id": "@devops",
+  "label": "DevOps",
+  "updated": "2026-04-24T19:56:57Z"
+}

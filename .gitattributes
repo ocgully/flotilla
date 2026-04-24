@@ -1,0 +1,9 @@
+# --- hopewell jsonl merge driver (managed) ---
+.hopewell/events.jsonl        merge=hopewell-jsonl
+.hopewell/attestations.jsonl  merge=hopewell-jsonl
+.hopewell/edges.jsonl         merge=hopewell-jsonl
+.hopewell/agents.jsonl        merge=hopewell-jsonl
+# --- /hopewell jsonl merge driver ---
+# --- hopewell network jsonl merge driver (managed) ---
+.hopewell/network/routes.jsonl  merge=hopewell-jsonl
+# --- /hopewell network jsonl merge driver ---

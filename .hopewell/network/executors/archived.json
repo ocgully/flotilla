@@ -1,0 +1,14 @@
+{
+  "component_data": {
+    "target": {
+      "target_kind": "archived"
+    }
+  },
+  "components": [
+    "target"
+  ],
+  "created": "2026-04-24T19:56:57Z",
+  "id": "archived",
+  "label": "Archive",
+  "updated": "2026-04-24T19:56:57Z"
+}

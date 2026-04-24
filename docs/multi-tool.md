@@ -1,0 +1,83 @@
+# Multi-tool integration
+
+This project is deliberately **tool-agnostic**. The three ecosystem CLIs
+(`hopewell`, `pedia`, `mercator`) are just shell commands; any agent
+harness that can spawn a process can drive them.
+
+## Claude Code
+
+**Setup:**
+
+```bash
+hopewell hooks install --full --claude-code
+```
+
+That single command:
+
+1. Installs git hooks (pre-commit, commit-msg, post-commit, pre-push)
+2. Writes entries into `~/.claude/settings.json` so the Claude Code harness
+   dispatches the same events through `hopewell claude-hooks`.
+
+**Agent roster:** `.claude/agents/` (composed from AgentFactory core via
+`bash ../AgentFactory/scripts/build-bundle.sh`).
+
+**Queries (identical to the others):**
+
+```bash
+hopewell show HW-0003
+pedia show --for HW-0003
+mercator query touches notes/store.py
+```
+
+## Codex
+
+**Setup:**
+
+```bash
+hopewell hooks install --full
+# (no --claude-code flag — Codex discovers agents via AGENTS.md)
+```
+
+**Agent roster:** [`AGENTS.md`](../AGENTS.md) in the repo root. Codex reads
+the alias list and maps `@architect`, `@planner`, etc., onto its own runner.
+
+**Differences from Claude Code:**
+
+- No `~/.claude/settings.json` mutation.
+- No `.claude/hooks/` directory needed — git hooks do the enforcement; the
+  harness doesn't need to fire parallel events.
+- Specs, nodes, and the code map live in the same `.hopewell/` / `.pedia/` /
+  `.mercator/` directories.
+
+## OpenCode
+
+**Setup:** same as Codex.
+
+```bash
+hopewell hooks install --full
+```
+
+OpenCode also reads `AGENTS.md`. If you want project-scoped OpenCode
+settings, drop them under `.opencode/` (not committed by default).
+
+## What's identical across all three
+
+- The three CLIs (`hopewell`, `pedia`, `mercator`) are the source of truth.
+- Git hooks enforce invariants below the harness — no matter which agent
+  tool is driving.
+- Work-item IDs (`HW-NNNN`) are the cross-tool reference key.
+
+## What differs
+
+| Capability | Claude Code | Codex | OpenCode |
+|-----------|-------------|-------|----------|
+| Native hook dispatch | via `~/.claude/settings.json` | via git hooks only | via git hooks only |
+| Agent discovery | `.claude/agents/` | `AGENTS.md` | `AGENTS.md` |
+| Bundle composition | `AgentFactory/scripts/build-bundle.sh` | same | same |
+| Harness-level context awareness | CLAUDE.md + .claudeignore | AGENTS.md | AGENTS.md + .opencode/ |
+
+## When adding tool-specific config
+
+- **Claude Code** → `.claude/` (committed) or `~/.claude/settings.json` (user-scope)
+- **Codex** → `AGENTS.md` is usually enough; if not, add a `.codex/` dir
+- **OpenCode** → `.opencode/` for project overrides

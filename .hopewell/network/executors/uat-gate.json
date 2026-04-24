@@ -1,0 +1,14 @@
+{
+  "component_data": {
+    "gate": {
+      "predicate_kind": "uat-status"
+    }
+  },
+  "components": [
+    "gate"
+  ],
+  "created": "2026-04-24T19:56:57Z",
+  "id": "uat-gate",
+  "label": "UAT Gate",
+  "updated": "2026-04-24T19:56:57Z"
+}

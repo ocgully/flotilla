@@ -1,0 +1,13 @@
+{
+  "schema_version": "1",
+  "stack": "python",
+  "generated_at": "2026-04-24T19:59:25Z",
+  "git_head": "unknown",
+  "tools": {},
+  "layers": {
+    "systems": "stub",
+    "contracts": "stub",
+    "symbols": "stub",
+    "assets": "stub"
+  }
+}

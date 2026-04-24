@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "notes"
+version = "0.1.0"
+description = "A tiny plain-text notes CLI — the domain vehicle for the agentfactory-showcase ecosystem demo."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "ocgully", email = "ocgully@users.noreply.github.com" }]
+dependencies = []
+
+[project.scripts]
+notes = "notes.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/ocgully/agentfactory-showcase"
+AgentFactory = "https://github.com/ocgully/AgentFactory"
+Hopewell = "https://github.com/ocgully/Hopewell"
+Pedia = "https://github.com/ocgully/pedia"
+Mercator = "https://github.com/ocgully/mercator"
+
+[tool.setuptools.packages.find]
+include = ["notes*"]
+exclude = ["tests*"]

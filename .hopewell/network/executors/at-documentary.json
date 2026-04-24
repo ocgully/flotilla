@@ -1,0 +1,17 @@
+{
+  "component_data": {
+    "agent": {
+      "agent_id": "@documentary",
+      "kind": "llm",
+      "role": "ADRs + progress stories + screenshots"
+    }
+  },
+  "components": [
+    "agent",
+    "queue"
+  ],
+  "created": "2026-04-24T19:56:57Z",
+  "id": "@documentary",
+  "label": "Documentary",
+  "updated": "2026-04-24T19:56:57Z"
+}

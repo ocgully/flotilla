@@ -1,0 +1,17 @@
+{
+  "component_data": {
+    "agent": {
+      "agent_id": "@vision-keeper",
+      "kind": "llm",
+      "role": "product vision authority — WHAT/WHY"
+    }
+  },
+  "components": [
+    "agent",
+    "queue"
+  ],
+  "created": "2026-04-24T19:56:57Z",
+  "id": "@vision-keeper",
+  "label": "Vision Keeper",
+  "updated": "2026-04-24T19:56:57Z"
+}

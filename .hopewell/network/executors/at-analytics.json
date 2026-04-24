@@ -1,0 +1,17 @@
+{
+  "component_data": {
+    "agent": {
+      "agent_id": "@analytics",
+      "kind": "llm",
+      "role": "experiment design + RoI measurement"
+    }
+  },
+  "components": [
+    "agent",
+    "queue"
+  ],
+  "created": "2026-04-24T19:56:57Z",
+  "id": "@analytics",
+  "label": "Analytics Engineer",
+  "updated": "2026-04-24T19:56:57Z"
+}

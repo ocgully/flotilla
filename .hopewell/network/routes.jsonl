@@ -1,0 +1,40 @@
+{"created": "2026-04-24T19:56:57Z", "from": "inbox", "label": "new work", "required": true, "to": "@orchestrator"}
+{"created": "2026-04-24T19:56:57Z", "from": "@orchestrator", "label": "vision check", "to": "@vision-keeper"}
+{"created": "2026-04-24T19:56:57Z", "from": "@orchestrator", "label": "backlog", "required": true, "to": "@product-manager"}
+{"created": "2026-04-24T19:56:57Z", "from": "@product-manager", "label": "scope", "required": true, "to": "@planner"}
+{"created": "2026-04-24T19:56:57Z", "from": "@planner", "label": "spec", "required": true, "to": "@architect"}
+{"created": "2026-04-24T19:56:57Z", "from": "@architect", "label": "test plan", "to": "@testing-qa"}
+{"condition": "components has ui", "created": "2026-04-24T19:56:57Z", "from": "@architect", "label": "UI review", "to": "@design-system-architect"}
+{"condition": "components has user-facing", "created": "2026-04-24T19:56:57Z", "from": "@architect", "label": "doc draft", "to": "@technical-writer"}
+{"condition": "components has measurable", "created": "2026-04-24T19:56:57Z", "from": "@architect", "label": "instrumentation plan", "to": "@analytics"}
+{"created": "2026-04-24T19:56:57Z", "from": "@architect", "label": "PR", "required": true, "to": "code-review"}
+{"created": "2026-04-24T19:56:57Z", "from": "@testing-qa", "label": "tests", "to": "code-review"}
+{"created": "2026-04-24T19:56:57Z", "from": "@design-system-architect", "label": "UI audit", "to": "code-review"}
+{"created": "2026-04-24T19:56:57Z", "from": "@technical-writer", "label": "docs", "to": "code-review"}
+{"created": "2026-04-24T19:56:57Z", "from": "@analytics", "label": "telemetry", "to": "code-review"}
+{"condition": "on_pass", "created": "2026-04-24T19:56:57Z", "from": "code-review", "label": "merge", "required": true, "to": "github-main"}
+{"condition": "on_fail", "created": "2026-04-24T19:56:57Z", "from": "code-review", "label": "rework", "to": "@architect"}
+{"created": "2026-04-24T19:56:57Z", "from": "github-main", "required": true, "to": "ci-pipeline"}
+{"condition": "on_pass", "created": "2026-04-24T19:56:57Z", "from": "ci-pipeline", "required": true, "to": "uat-gate"}
+{"condition": "on_fail", "created": "2026-04-24T19:56:57Z", "from": "ci-pipeline", "label": "fix", "to": "@architect"}
+{"condition": "on_pass", "created": "2026-04-24T19:56:57Z", "from": "uat-gate", "label": "deploy", "to": "@devops"}
+{"created": "2026-04-24T19:56:57Z", "from": "@devops", "required": true, "to": "prod-deploy"}
+{"condition": "on_fail", "created": "2026-04-24T19:56:57Z", "from": "uat-gate", "label": "rework", "to": "@architect"}
+{"created": "2026-04-24T19:56:57Z", "from": "prod-deploy", "required": true, "to": "archived"}
+{"created": "2026-04-24T19:56:57Z", "from": "github-main", "label": "refresh codemap", "to": "@codemap-keeper"}
+{"condition": "components has user-facing", "created": "2026-04-24T19:56:57Z", "from": "github-main", "label": "update docs", "to": "@technical-writer"}
+{"condition": "components has ui", "created": "2026-04-24T19:56:57Z", "from": "github-main", "label": "catalog audit", "to": "@design-system-architect"}
+{"created": "2026-04-24T19:56:57Z", "from": "prod-deploy", "label": "start measuring", "to": "@analytics"}
+{"created": "2026-04-24T19:56:57Z", "from": "prod-deploy", "label": "live-ops tuning", "to": "@product-manager"}
+{"created": "2026-04-24T19:56:57Z", "from": "archived", "label": "capture story", "to": "@documentary"}
+{"created": "2026-04-24T19:56:57Z", "from": "@documentary", "label": "story captured", "to": "archived"}
+{"created": "2026-04-24T19:56:57Z", "from": "@codemap-keeper", "label": "codemap refreshed", "to": "archived"}
+{"created": "2026-04-24T19:56:57Z", "from": "@vision-keeper", "label": "vision affirmed", "to": "archived"}
+{"condition": "on_pass", "from": "code-review", "to": "github-main", "tombstone": true, "ts": "2026-04-24T19:57:03Z"}
+{"condition": "on_pass", "created": "2026-04-24T19:56:57Z", "data": {"auto_enforced": true}, "from": "code-review", "label": "merge", "required": true, "to": "github-main"}
+{"condition": "on_fail", "from": "code-review", "to": "@architect", "tombstone": true, "ts": "2026-04-24T19:57:50Z"}
+{"condition": "on_fail", "created": "2026-04-24T19:56:57Z", "data": {"auto_enforced": true}, "from": "code-review", "label": "rework", "to": "@architect"}
+{"condition": "on_pass", "from": "ci-pipeline", "to": "uat-gate", "tombstone": true, "ts": "2026-04-24T19:57:50Z"}
+{"condition": "on_pass", "created": "2026-04-24T19:56:57Z", "data": {"auto_enforced": true}, "from": "ci-pipeline", "required": true, "to": "uat-gate"}
+{"condition": "on_fail", "from": "ci-pipeline", "to": "@architect", "tombstone": true, "ts": "2026-04-24T19:57:50Z"}
+{"condition": "on_fail", "created": "2026-04-24T19:56:57Z", "data": {"auto_enforced": true}, "from": "ci-pipeline", "label": "fix", "to": "@architect"}

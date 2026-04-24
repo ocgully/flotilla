@@ -1,0 +1,4 @@
+# Marketplaces composed into .claude/agents/ (via AgentFactory/scripts/build-bundle.sh).
+# Order matters: later entries win on agent-name collisions.
+# Local overrides at .claude/agents-local/ win over everything.
+core

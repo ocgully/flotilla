@@ -1,0 +1,15 @@
+{
+  "component_data": {
+    "service": {
+      "endpoint": "main",
+      "service_kind": "github"
+    }
+  },
+  "components": [
+    "service"
+  ],
+  "created": "2026-04-24T19:56:57Z",
+  "id": "github-main",
+  "label": "GitHub main",
+  "updated": "2026-04-24T19:56:57Z"
+}

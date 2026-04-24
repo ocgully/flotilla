@@ -1,0 +1,14 @@
+{
+  "component_data": {
+    "source": {
+      "source_kind": "inbox"
+    }
+  },
+  "components": [
+    "source"
+  ],
+  "created": "2026-04-24T19:56:57Z",
+  "id": "inbox",
+  "label": "Inbox",
+  "updated": "2026-04-24T19:56:57Z"
+}

@@ -1,0 +1,9 @@
+# Agents must NOT read these directories — query via CLI instead.
+# See CLAUDE.md for rationale.
+.hopewell/
+.pedia/
+.mercator/
+/.hopewell/
+
+# pedia:managed -- agents must query via the `pedia` CLI, never read .pedia/ directly
+.pedia/

@@ -1,0 +1,17 @@
+{
+  "component_data": {
+    "agent": {
+      "agent_id": "@architect",
+      "kind": "llm",
+      "role": "design + decomposition + boundaries"
+    }
+  },
+  "components": [
+    "agent",
+    "queue"
+  ],
+  "created": "2026-04-24T19:56:57Z",
+  "id": "@architect",
+  "label": "Architect",
+  "updated": "2026-04-24T19:56:57Z"
+}

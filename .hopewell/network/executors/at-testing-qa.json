@@ -1,0 +1,17 @@
+{
+  "component_data": {
+    "agent": {
+      "agent_id": "@testing-qa",
+      "kind": "llm",
+      "role": "test discipline + fitness checks"
+    }
+  },
+  "components": [
+    "agent",
+    "queue"
+  ],
+  "created": "2026-04-24T19:56:57Z",
+  "id": "@testing-qa",
+  "label": "Testing/QA Strategist",
+  "updated": "2026-04-24T19:56:57Z"
+}

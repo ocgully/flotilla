@@ -1,0 +1,6 @@
+version: 1
+token_approx_chars_per_token: 4
+query:
+  default_limit: 10
+  default_token_budget: 2000
+  universal_reserve: 500

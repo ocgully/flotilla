@@ -1,0 +1,18 @@
+{
+  "component_data": {
+    "gate": {
+      "predicate_kind": "ci-green"
+    },
+    "service": {
+      "service_kind": "ci"
+    }
+  },
+  "components": [
+    "service",
+    "gate"
+  ],
+  "created": "2026-04-24T19:56:57Z",
+  "id": "ci-pipeline",
+  "label": "CI Pipeline",
+  "updated": "2026-04-24T19:56:57Z"
+}

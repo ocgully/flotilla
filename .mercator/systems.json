@@ -1,0 +1,48 @@
+{
+  "schema_version": "1",
+  "layer": "systems",
+  "stack": "python",
+  "workspace_root": ".",
+  "systems": [
+    {
+      "name": "notes",
+      "version": "0.1.0",
+      "manifest_path": "pyproject.toml",
+      "kind": ["package", "cli"],
+      "roles": ["application"],
+      "entry_points": {
+        "cli": "notes.cli:main"
+      },
+      "modules": [
+        {
+          "name": "notes.cli",
+          "path": "notes/cli.py",
+          "role": "adapter"
+        },
+        {
+          "name": "notes.store",
+          "path": "notes/store.py",
+          "role": "core"
+        }
+      ],
+      "dependencies": []
+    },
+    {
+      "name": "notes-tests",
+      "version": "0.1.0",
+      "manifest_path": "tests/",
+      "kind": ["tests"],
+      "roles": ["verification"],
+      "modules": [
+        {
+          "name": "tests.test_notes",
+          "path": "tests/test_notes.py",
+          "role": "test"
+        }
+      ],
+      "dependencies": [
+        { "name": "notes", "kind": "normal", "optional": false }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{"data": {"components": ["work-item", "deliverable"], "title": "Initial notes CLI skeleton"}, "kind": "node.create", "node": "HW-0001", "ts": "2026-04-24T19:55:24.105693Z"}
+{"data": {"components": ["work-item", "deliverable", "user-facing"], "title": "Add notes add + list commands"}, "kind": "node.create", "node": "HW-0002", "ts": "2026-04-24T19:55:24.450795Z"}
+{"data": {"components": ["work-item", "deliverable", "user-facing"], "title": "Search by substring"}, "kind": "node.create", "node": "HW-0003", "ts": "2026-04-24T19:55:24.891083Z"}
+{"data": {"components": ["work-item", "deliverable", "user-facing"], "title": "Mark-done with numeric id"}, "kind": "node.create", "node": "HW-0004", "ts": "2026-04-24T19:55:25.449142Z"}
+{"data": {"components": ["work-item", "deliverable"], "title": "Storage path configurable via env var"}, "kind": "node.create", "node": "HW-0005", "ts": "2026-04-24T19:55:25.866106Z"}
+{"data": {"components": ["work-item", "deliverable", "user-facing"], "title": "Tagged notes"}, "kind": "node.create", "node": "HW-0006", "ts": "2026-04-24T19:55:36.186128Z"}
+{"data": {"components": ["work-item", "deliverable", "user-facing"], "title": "Dates / due-dates"}, "kind": "node.create", "node": "HW-0007", "ts": "2026-04-24T19:55:36.782018Z"}
+{"data": {"components": ["release"], "title": "v0.1.0 — notes CLI first usable cut"}, "kind": "node.create", "node": "HW-0008", "ts": "2026-04-24T19:55:37.296662Z"}
+{"data": {"from": "idea", "to": "ready"}, "kind": "node.status.change", "node": "HW-0001", "reason": "CLI skeleton scaffolded + pyproject + first test.", "ts": "2026-04-24T19:55:55.221658Z"}
+{"data": {"from": "ready", "to": "doing"}, "kind": "node.status.change", "node": "HW-0001", "reason": "CLI skeleton scaffolded + pyproject + first test.", "ts": "2026-04-24T19:55:55.233323Z"}
+{"data": {"from": "doing", "to": "review"}, "kind": "node.status.change", "node": "HW-0001", "reason": "CLI skeleton scaffolded + pyproject + first test.", "ts": "2026-04-24T19:55:55.245428Z"}
+{"data": {"from": "review", "to": "done"}, "kind": "node.status.change", "node": "HW-0001", "reason": "CLI skeleton scaffolded + pyproject + first test.", "ts": "2026-04-24T19:55:55.256218Z"}
+{"data": {"note": "closed - CLI skeleton scaffolded + pyproject + first test."}, "kind": "node.touch", "node": "HW-0001", "ts": "2026-04-24T19:55:55.266920Z"}
+{"kind": "node.close", "node": "HW-0001", "reason": "CLI skeleton scaffolded + pyproject + first test.", "ts": "2026-04-24T19:55:55.266920Z"}
+{"data": {"from": "idea", "to": "ready"}, "kind": "node.status.change", "node": "HW-0002", "reason": "add + list commands implemented in notes/cli.py; see [[specs/001-search/spec]].", "ts": "2026-04-24T19:55:55.594310Z"}
+{"data": {"from": "ready", "to": "doing"}, "kind": "node.status.change", "node": "HW-0002", "reason": "add + list commands implemented in notes/cli.py; see [[specs/001-search/spec]].", "ts": "2026-04-24T19:55:55.605031Z"}
+{"data": {"from": "doing", "to": "review"}, "kind": "node.status.change", "node": "HW-0002", "reason": "add + list commands implemented in notes/cli.py; see [[specs/001-search/spec]].", "ts": "2026-04-24T19:55:55.615837Z"}
+{"data": {"from": "review", "to": "done"}, "kind": "node.status.change", "node": "HW-0002", "reason": "add + list commands implemented in notes/cli.py; see [[specs/001-search/spec]].", "ts": "2026-04-24T19:55:55.625972Z"}
+{"data": {"note": "closed - add + list commands implemented in notes/cli.py; see [[specs/001-search/spec]]."}, "kind": "node.touch", "node": "HW-0002", "ts": "2026-04-24T19:55:55.637148Z"}
+{"kind": "node.close", "node": "HW-0002", "reason": "add + list commands implemented in notes/cli.py; see [[specs/001-search/spec]].", "ts": "2026-04-24T19:55:55.637148Z"}
+{"data": {"from": "idea", "to": "ready"}, "kind": "node.status.change", "node": "HW-0003", "reason": "search implemented in notes.store.search; spec specs/001-search/spec.md.", "ts": "2026-04-24T19:55:56.005490Z"}
+{"data": {"from": "ready", "to": "doing"}, "kind": "node.status.change", "node": "HW-0003", "reason": "search implemented in notes.store.search; spec specs/001-search/spec.md.", "ts": "2026-04-24T19:55:56.016994Z"}
+{"data": {"from": "doing", "to": "review"}, "kind": "node.status.change", "node": "HW-0003", "reason": "search implemented in notes.store.search; spec specs/001-search/spec.md.", "ts": "2026-04-24T19:55:56.026210Z"}
+{"data": {"from": "review", "to": "done"}, "kind": "node.status.change", "node": "HW-0003", "reason": "search implemented in notes.store.search; spec specs/001-search/spec.md.", "ts": "2026-04-24T19:55:56.035880Z"}
+{"data": {"note": "closed - search implemented in notes.store.search; spec specs/001-search/spec.md."}, "kind": "node.touch", "node": "HW-0003", "ts": "2026-04-24T19:55:56.048042Z"}
+{"kind": "node.close", "node": "HW-0003", "reason": "search implemented in notes.store.search; spec specs/001-search/spec.md.", "ts": "2026-04-24T19:55:56.049081Z"}
+{"data": {"from": "idea", "to": "ready"}, "kind": "node.status.change", "node": "HW-0004", "reason": "mark-done implemented in notes.store.mark_done with 1-based id.", "ts": "2026-04-24T19:55:56.419940Z"}
+{"data": {"from": "ready", "to": "doing"}, "kind": "node.status.change", "node": "HW-0004", "reason": "mark-done implemented in notes.store.mark_done with 1-based id.", "ts": "2026-04-24T19:55:56.431012Z"}
+{"data": {"from": "doing", "to": "review"}, "kind": "node.status.change", "node": "HW-0004", "reason": "mark-done implemented in notes.store.mark_done with 1-based id.", "ts": "2026-04-24T19:55:56.441975Z"}
+{"data": {"from": "review", "to": "done"}, "kind": "node.status.change", "node": "HW-0004", "reason": "mark-done implemented in notes.store.mark_done with 1-based id.", "ts": "2026-04-24T19:55:56.451553Z"}
+{"data": {"note": "closed - mark-done implemented in notes.store.mark_done with 1-based id."}, "kind": "node.touch", "node": "HW-0004", "ts": "2026-04-24T19:55:56.461094Z"}
+{"kind": "node.close", "node": "HW-0004", "reason": "mark-done implemented in notes.store.mark_done with 1-based id.", "ts": "2026-04-24T19:55:56.461611Z"}
+{"data": {"from": "idea", "to": "ready"}, "kind": "node.status.change", "node": "HW-0005", "reason": "NOTES_PATH env var honoured in notes.store.store_path.", "ts": "2026-04-24T19:55:57.014572Z"}
+{"data": {"from": "ready", "to": "doing"}, "kind": "node.status.change", "node": "HW-0005", "reason": "NOTES_PATH env var honoured in notes.store.store_path.", "ts": "2026-04-24T19:55:57.026577Z"}
+{"data": {"from": "doing", "to": "review"}, "kind": "node.status.change", "node": "HW-0005", "reason": "NOTES_PATH env var honoured in notes.store.store_path.", "ts": "2026-04-24T19:55:57.037627Z"}
+{"data": {"from": "review", "to": "done"}, "kind": "node.status.change", "node": "HW-0005", "reason": "NOTES_PATH env var honoured in notes.store.store_path.", "ts": "2026-04-24T19:55:57.048749Z"}
+{"data": {"note": "closed - NOTES_PATH env var honoured in notes.store.store_path."}, "kind": "node.touch", "node": "HW-0005", "ts": "2026-04-24T19:55:57.059800Z"}
+{"kind": "node.close", "node": "HW-0005", "reason": "NOTES_PATH env var honoured in notes.store.store_path.", "ts": "2026-04-24T19:55:57.059800Z"}
+{"data": {"components": ["release", "grouping"], "title": "Release v0.1.0"}, "kind": "node.create", "node": "HW-0009", "ts": "2026-04-24T19:56:21.754988Z"}
+{"data": {"from": "idea", "to": "ready"}, "kind": "node.status.change", "node": "HW-0008", "reason": "Superseded by HW-0009 (created via 'hopewell release start v0.1.0'). Kept as an example of how a hand-seeded release stub differs from the release-flow node.", "ts": "2026-04-24T19:56:46.441070Z"}
+{"data": {"from": "ready", "to": "doing"}, "kind": "node.status.change", "node": "HW-0008", "reason": "Superseded by HW-0009 (created via 'hopewell release start v0.1.0'). Kept as an example of how a hand-seeded release stub differs from the release-flow node.", "ts": "2026-04-24T19:56:46.459814Z"}
+{"data": {"from": "doing", "to": "review"}, "kind": "node.status.change", "node": "HW-0008", "reason": "Superseded by HW-0009 (created via 'hopewell release start v0.1.0'). Kept as an example of how a hand-seeded release stub differs from the release-flow node.", "ts": "2026-04-24T19:56:46.469427Z"}
+{"data": {"from": "review", "to": "done"}, "kind": "node.status.change", "node": "HW-0008", "reason": "Superseded by HW-0009 (created via 'hopewell release start v0.1.0'). Kept as an example of how a hand-seeded release stub differs from the release-flow node.", "ts": "2026-04-24T19:56:46.482045Z"}
+{"data": {"note": "closed - Superseded by HW-0009 (created via 'hopewell release start v0.1.0'). Kept as an example of how a hand-seeded release stub differs from the release-flow node."}, "kind": "node.touch", "node": "HW-0008", "ts": "2026-04-24T19:56:46.498314Z"}
+{"kind": "node.close", "node": "HW-0008", "reason": "Superseded by HW-0009 (created via 'hopewell release start v0.1.0'). Kept as an example of how a hand-seeded release stub differs from the release-flow node.", "ts": "2026-04-24T19:56:46.498314Z"}
