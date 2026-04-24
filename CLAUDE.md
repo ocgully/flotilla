@@ -30,6 +30,23 @@ Six slim agents live in `.claude/agents/`:
 Extend by dropping your own domain agents alongside the core six. There is no
 bundler — `.claude/agents/` is maintained per-project.
 
+## Orchestrator-first routing
+
+**Every Claude Code request in this project routes through `@orchestrator` by default.** The
+SessionStart hook (installed by `scripts/bootstrap.sh`) injects a preamble to every fresh
+session reminding it of this convention.
+
+- Canonical entry points: `/o <request>` and `/orchestrate <request>`
+- `@orchestrator` composes the Hopewell + Pedia + Mercator context bundle and dispatches to
+  the right specialist with full context — so the specialist never re-discovers state
+- If you want to bypass (you know the exact specialist + have the context), pass `--direct`
+- If a specialist agent is invoked directly for substantive work, it redirects to
+  `@orchestrator` unless `--direct` was passed
+
+This discipline is the difference between coherent multi-session output and the "why did
+Claude forget what we just decided" feeling. Skipping the orchestrator is the most common
+cause of that gap.
+
 ## Hook-driven invariants
 
 Once `scripts/bootstrap.sh` runs, the following are enforced automatically:

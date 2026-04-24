@@ -47,9 +47,42 @@ Pedia pulls up for a work item.
 
 See [`docs/multi-tool.md`](docs/multi-tool.md) for details.
 
+## The orchestrator-first convention
+
+Flotilla projects route every Claude Code request through `@orchestrator` by default. The
+SessionStart hook (installed by `scripts/bootstrap.sh`) injects a preamble reminding the
+session of this convention. You invoke work via a slash command, not by naming a specific
+agent:
+
+```
+/o  add a tag field to notes with search support
+/orchestrate  cut a v0.2 release once HW-0006 and HW-0007 are done
+```
+
+`@orchestrator` composes the full context bundle (Hopewell state, Pedia-cited specs, Mercator
+systems view, active claims) and dispatches to `@engineer` / `@architect` / `@planner` /
+`@testing-qa` / `@release-engineer` with that bundle already in hand — so downstream agents
+don't re-discover state.
+
+If you genuinely need to bypass the orchestrator (e.g. you know the exact specialist and have
+the context), pass `--direct`:
+
+```
+/engineer --direct  fix the typo in notes/store.py line 42
+```
+
+Direct invocation should be the exception, not the default. Spotty output across a long
+session is almost always the signature of skipped orchestration.
+
 ## Try the loops
 
-1. **Start a new feature**
+1. **Start a new feature** (via `/o`)
+
+   ```
+   /o  add tag support to notes with #hashtag indexing
+   ```
+
+   Or, if you just want the Hopewell node without engaging an agent yet:
 
    ```bash
    hopewell new --components work-item,deliverable --title "Tag notes with #hashtags"
