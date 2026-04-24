@@ -1,10 +1,14 @@
-# agentfactory-showcase
+# Flotilla
 
-A working example of the AgentFactory ecosystem: **Mercator** (code map),
-**Hopewell** (work ledger), **Pedia** (knowledge base) plus a core agent
-bundle, multi-tool compatibility (Claude Code / Codex / OpenCode), and
-git-hook-enforced quality gates. The notes CLI is the domain; everything
-else is the setup you'd use for any project.
+**An AI-native SDLC starter kit.** Clone → install three tools → bootstrap → ship.
+
+Flotilla gives you the three tools every AI-native project needs, pre-wired and ready:
+- **Mercator** — code map (what lives where, what depends on what)
+- **Hopewell** — work ledger (typed nodes, flow network, release scoring)
+- **Pedia** — knowledge base (block-indexed specs + decisions + north stars)
+
+Plus a minimal six-agent bundle, pre-initialized stores, git hooks, and a trivial
+notes CLI as the domain so the tooling is what you study, not the business logic.
 
 ## Prerequisites (one-time)
 
@@ -16,8 +20,8 @@ else is the setup you'd use for any project.
 ## Quickstart — 6 commands
 
 ```bash
-git clone https://github.com/ocgully/agentfactory-showcase
-cd agentfactory-showcase
+git clone https://github.com/ocgully/flotilla
+cd flotilla
 pip install mercator hopewell pedia       # the three tools
 pip install -e .                          # the toy notes CLI
 bash scripts/bootstrap.sh                 # installs hooks, refreshes indexes
@@ -33,11 +37,11 @@ Pedia pulls up for a work item.
 - `.pedia/` with 1 north-star, 1 constitution chapter, 1 spec, 1 decision, 1 PRD
 - `.mercator/` with the notes CLI's systems map
 - Git hooks: pre-commit (drift + HW-ref), commit-msg, post-commit (events), pre-push (release-score)
-- `.claude/agents/` bundle composed from AgentFactory core
+- `.claude/agents/` with six slim agents: architect, engineer, planner, testing-qa, release-engineer, orchestrator
 
 ## Multi-tool support
 
-- **Claude Code**: `hopewell hooks install --full --claude-code` wires hooks into `~/.claude/settings.json`; `.claude/agents/` holds the composed agent roster.
+- **Claude Code**: `hopewell hooks install --full --claude-code` wires hooks into `~/.claude/settings.json`; `.claude/agents/` holds the agent roster.
 - **Codex**: reads `AGENTS.md` for agent aliases; shares the same `.hopewell/`, `.pedia/`, `.mercator/` CLIs.
 - **OpenCode**: reads `AGENTS.md` as well; project-specific overrides can live under `.opencode/` if you want them.
 
@@ -72,20 +76,19 @@ See [`docs/multi-tool.md`](docs/multi-tool.md) for details.
 ## Layout
 
 ```
-agentfactory-showcase/
+flotilla/
 ├── notes/             # the toy domain (~230 LOC)
 ├── tests/             # stdlib unittest only
 ├── .hopewell/         # work ledger (agents query via `hopewell`, never read directly)
 ├── .pedia/            # knowledge base (agents query via `pedia`)
 ├── .mercator/         # code map (agents query via `mercator`)
-├── .claude/agents/    # composed core-marketplace roster
+├── .claude/agents/    # six slim core agents, maintained in-repo
 ├── docs/              # tutorial + release + multi-tool guides
 └── scripts/bootstrap.sh
 ```
 
 ## Links
 
-- [AgentFactory](https://github.com/ocgully/AgentFactory)
 - [Hopewell](https://github.com/ocgully/Hopewell)
 - [Pedia](https://github.com/ocgully/pedia)
-- [Mercator](https://github.com/ocgully/mercator) (formerly codemap)
+- [Mercator](https://github.com/ocgully/mercator)

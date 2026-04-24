@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "notes"
 version = "0.1.0"
-description = "A tiny plain-text notes CLI — the domain vehicle for the agentfactory-showcase ecosystem demo."
+description = "A tiny plain-text notes CLI — the domain vehicle for the Flotilla starter kit."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
@@ -16,8 +16,7 @@ dependencies = []
 notes = "notes.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/ocgully/agentfactory-showcase"
-AgentFactory = "https://github.com/ocgully/AgentFactory"
+Homepage = "https://github.com/ocgully/flotilla"
 Hopewell = "https://github.com/ocgully/Hopewell"
 Pedia = "https://github.com/ocgully/pedia"
 Mercator = "https://github.com/ocgully/mercator"

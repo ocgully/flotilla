@@ -1,7 +1,7 @@
 # .hopewell/config.toml  —  edit freely.
 
 [project]
-name = "agentfactory-showcase"
+name = "flotilla"
 id_prefix = "HW"
 id_pad = 4
 

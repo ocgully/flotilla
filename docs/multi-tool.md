@@ -18,8 +18,8 @@ That single command:
 2. Writes entries into `~/.claude/settings.json` so the Claude Code harness
    dispatches the same events through `hopewell claude-hooks`.
 
-**Agent roster:** `.claude/agents/` (composed from AgentFactory core via
-`bash ../AgentFactory/scripts/build-bundle.sh`).
+**Agent roster:** `.claude/agents/` — six slim agents maintained directly in
+the repo (no bundler).
 
 **Queries (identical to the others):**
 
@@ -73,7 +73,6 @@ settings, drop them under `.opencode/` (not committed by default).
 |-----------|-------------|-------|----------|
 | Native hook dispatch | via `~/.claude/settings.json` | via git hooks only | via git hooks only |
 | Agent discovery | `.claude/agents/` | `AGENTS.md` | `AGENTS.md` |
-| Bundle composition | `AgentFactory/scripts/build-bundle.sh` | same | same |
 | Harness-level context awareness | CLAUDE.md + .claudeignore | AGENTS.md | AGENTS.md + .opencode/ |
 
 ## When adding tool-specific config

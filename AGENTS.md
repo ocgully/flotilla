@@ -1,18 +1,13 @@
 # Agents in this project
 
-Core agents are defined in `.claude/agents/` (composed from AgentFactory core).
-Aliases recognised by Codex and OpenCode:
+Six slim agents live in `.claude/agents/`. Aliases recognised by Codex and OpenCode:
 
-- `@vision-keeper` → product vision
-- `@architect` → design + decomposition
-- `@planner` → spec authoring
-- `@orchestrator` → dispatch + gate management
-- `@engineer` → (no core engineer; use project-local if declared)
-- `@testing-qa` → test discipline
-- `@technical-writer` → user-facing docs
-- `@documentary` → progress narrative
-- `@release-engineer` → gitflow + release cutting
-- `@mercator-keeper` → code-map upkeep
+- `@architect` — structural decisions + ADRs + boundaries
+- `@engineer` — implementation within the boundaries
+- `@planner` — spec authoring (`pedia spec new` is the primary path)
+- `@testing-qa` — tests + fitness checks + boundary gate
+- `@release-engineer` — gitflow + release cutting via `hopewell release`
+- `@orchestrator` — routes work through the Hopewell flow network
 
 For Hopewell + Pedia + Mercator CLI commands every agent can run, see
 [`CLAUDE.md`](CLAUDE.md) and [`docs/multi-tool.md`](docs/multi-tool.md).
@@ -26,6 +21,6 @@ For Hopewell + Pedia + Mercator CLI commands every agent can run, see
 
 ## Tool-specific notes
 
-- **Claude Code** — full hook integration via `hopewell hooks install --full --claude-code`
+- **Claude Code** — full hook integration via `hopewell hooks install --full --claude-code`; agents in `.claude/agents/`
 - **Codex** — reads this file; run `hopewell` / `pedia` / `mercator` CLIs as shell commands
 - **OpenCode** — reads this file; same shell-CLI pattern as Codex

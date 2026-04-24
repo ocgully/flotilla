@@ -17,5 +17,5 @@ A notes CLI so trivial you don't think about it.
   the answer is almost always "the naive thing."
 
 The domain is deliberately boring because this project exists to showcase
-the surrounding ecosystem — Mercator + Hopewell + Pedia + the AgentFactory
-core-agent bundle — not a novel note-taking paradigm.
+the surrounding ecosystem — Mercator + Hopewell + Pedia + a minimal six-agent
+bundle — not a novel note-taking paradigm.
