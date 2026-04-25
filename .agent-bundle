@@ -1,3 +1,0 @@
-# Flotilla — minimal agent bundle
-# These agents live directly in .claude/agents/ and are maintained per-project.
-# Extend by adding your own domain agents alongside the core six.

@@ -3,24 +3,41 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "notes"
+name = "flotilla"
 version = "0.1.0"
-description = "A tiny plain-text notes CLI — the domain vehicle for the Flotilla starter kit."
+description = "Plugin marketplace for AI-native projects — installs and composes Claude Code agents, skills, commands, hooks, and MCP servers from per-tool plugin repos."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
-authors = [{ name = "ocgully", email = "ocgully@users.noreply.github.com" }]
+authors = [{ name = "Christopher Gulliver" }]
+keywords = ["flotilla", "ai", "agents", "claude-code", "plugin-marketplace", "marketplace"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Libraries",
+]
+# Core is stdlib-only. PyYAML is optional — a tiny built-in YAML loader
+# handles the manifest subset when PyYAML is absent.
 dependencies = []
 
+[project.optional-dependencies]
+yaml = ["pyyaml>=6.0"]
+dev = ["pytest>=8", "ruff>=0.4"]
+
 [project.scripts]
-notes = "notes.cli:main"
+flotilla = "flotilla.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/ocgully/flotilla"
-Hopewell = "https://github.com/ocgully/Hopewell"
-Pedia = "https://github.com/ocgully/pedia"
-Mercator = "https://github.com/ocgully/mercator"
+Repository = "https://github.com/ocgully/flotilla"
+Issues = "https://github.com/ocgully/flotilla/issues"
 
 [tool.setuptools.packages.find]
-include = ["notes*"]
-exclude = ["tests*"]
+where = ["."]
+include = ["flotilla*"]
+exclude = ["tests*", "examples*"]

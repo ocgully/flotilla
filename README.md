@@ -1,127 +1,141 @@
 # Flotilla
 
-**An AI-native SDLC starter kit.** Clone → install three tools → bootstrap → ship.
-
-Flotilla gives you the three tools every AI-native project needs, pre-wired and ready:
-- **Mercator** — code map (what lives where, what depends on what)
-- **Hopewell** — work ledger (typed nodes, flow network, release scoring)
-- **Pedia** — knowledge base (block-indexed specs + decisions + north stars)
-
-Plus a minimal six-agent bundle, pre-initialized stores, git hooks, and a trivial
-notes CLI as the domain so the tooling is what you study, not the business logic.
-
-## Prerequisites (one-time)
-
-- Python 3.10+
-- git
-- Optional: `gh` CLI (for GitHub integration)
-- One of: Claude Code CLI / Codex / OpenCode
-
-## Quickstart — 6 commands
+**Plugin marketplace for AI-native projects.** Flotilla is a CLI that
+installs plugins — each one a git repo or pip package — and composes
+their contributions (Claude Code agents, skills, commands, hooks, MCP
+servers) into your project's `.claude/` directory.
 
 ```bash
-git clone https://github.com/ocgully/flotilla
-cd flotilla
-pip install mercator hopewell pedia       # the three tools
-pip install -e .                          # the toy notes CLI
-bash scripts/bootstrap.sh                 # installs hooks, refreshes indexes
-hopewell web --open                       # explore the canvas
+pip install flotilla
+flotilla init
+flotilla install hopewell pedia mercator slim-agents
 ```
 
-That's it. The project is live. Try `pedia show --for HW-0001` to see what
-Pedia pulls up for a work item.
+That's it. Your project now has the four canonical Flotilla tools wired
+in — work ledger, knowledge base, codemap, and a slim 6-agent bundle —
+each pinned to a version, each upgradeable independently with
+`flotilla upgrade`, each removable cleanly with `flotilla remove`.
 
-## What's set up
+## What is a plugin?
 
-- `.hopewell/` with 5 historical nodes + 2 open + 1 release
-- `.pedia/` with 1 north-star, 1 constitution chapter, 1 spec, 1 decision, 1 PRD
-- `.mercator/` with the notes CLI's systems map
-- Git hooks: pre-commit (drift + HW-ref), commit-msg, post-commit (events), pre-push (release-score)
-- `.claude/agents/` with six slim agents: architect, engineer, planner, testing-qa, release-engineer, orchestrator
+A **Flotilla plugin** is any git repo (or pip package) that contains a
+`flotilla.yaml` manifest at the root declaring its contributions:
 
-## Multi-tool support
-
-- **Claude Code**: `hopewell hooks install --full --claude-code` wires hooks into `~/.claude/settings.json`; `.claude/agents/` holds the agent roster.
-- **Codex**: reads `AGENTS.md` for agent aliases; shares the same `.hopewell/`, `.pedia/`, `.mercator/` CLIs.
-- **OpenCode**: reads `AGENTS.md` as well; project-specific overrides can live under `.opencode/` if you want them.
-
-See [`docs/multi-tool.md`](docs/multi-tool.md) for details.
-
-## The orchestrator-first convention
-
-Flotilla projects route every Claude Code request through `@orchestrator` by default. The
-SessionStart hook (installed by `scripts/bootstrap.sh`) injects a preamble reminding the
-session of this convention. You invoke work via a slash command, not by naming a specific
-agent:
-
-```
-/o  add a tag field to notes with search support
-/orchestrate  cut a v0.2 release once HW-0006 and HW-0007 are done
+```yaml
+name: hopewell
+version: 0.16.0
+kind: tool                    # "tool" (pip) or "agent-pack" (git-clone)
+python_package:
+  name: hopewell
+contributes:
+  agents:    plugin/agents/   # drop-in .md files for Claude Code
+  commands:  plugin/commands/ # /slash-command .md files
+  hooks:     plugin/hooks.yaml
+  mcp:       plugin/mcp.yaml
+on_install:
+  - hopewell hooks install --full --quiet
 ```
 
-`@orchestrator` composes the full context bundle (Hopewell state, Pedia-cited specs, Mercator
-systems view, active claims) and dispatches to `@engineer` / `@architect` / `@planner` /
-`@testing-qa` / `@release-engineer` with that bundle already in hand — so downstream agents
-don't re-discover state.
+Two install models, both supported, manifest-declared per plugin:
 
-If you genuinely need to bypass the orchestrator (e.g. you know the exact specialist and have
-the context), pass `--direct`:
+- **Tool plugins** (`kind: tool`) — `pip install <package>`, then read
+  the `flotilla.yaml` from the installed package and compose. Used by
+  Hopewell, Pedia, Mercator. Versioning is whatever pip understands.
+- **Agent-pack plugins** (`kind: agent-pack`) — `git clone` into the
+  project's `.flotilla/cache/`, check out the requested ref, then
+  compose. Used by `slim-agents` and any pure-markdown plugin.
 
-```
-/engineer --direct  fix the typo in notes/store.py line 42
-```
+See [`docs/authoring-plugins.md`](docs/authoring-plugins.md) for the
+full schema and a worked example.
 
-Direct invocation should be the exception, not the default. Spotty output across a long
-session is almost always the signature of skipped orchestration.
-
-## Try the loops
-
-1. **Start a new feature** (via `/o`)
-
-   ```
-   /o  add tag support to notes with #hashtag indexing
-   ```
-
-   Or, if you just want the Hopewell node without engaging an agent yet:
-
-   ```bash
-   hopewell new --components work-item,deliverable --title "Tag notes with #hashtags"
-   pedia show --for HW-0009
-   ```
-
-2. **Resolve a drift scenario** (edit the spec, commit, observe pre-commit block, resolve via reconcile)
-
-   ```bash
-   # Edit .pedia/specs/001-search/spec.md, then:
-   git add .pedia/specs/001-search/spec.md
-   git commit -m "Drift spec for HW-0003"   # pre-commit will flag
-   hopewell reconcile                        # queues a downstream-review node
-   ```
-
-3. **Cut a release**
-
-   ```bash
-   hopewell release start v0.2.0 --scope HW-0006,HW-0007
-   hopewell release score
-   hopewell release finalize
-   ```
-
-## Layout
+## CLI
 
 ```
-flotilla/
-├── notes/             # the toy domain (~230 LOC)
-├── tests/             # stdlib unittest only
-├── .hopewell/         # work ledger (agents query via `hopewell`, never read directly)
-├── .pedia/            # knowledge base (agents query via `pedia`)
-├── .mercator/         # code map (agents query via `mercator`)
-├── .claude/agents/    # six slim core agents, maintained in-repo
-├── docs/              # tutorial + release + multi-tool guides
-└── scripts/bootstrap.sh
+flotilla init                    scaffold .flotilla/ in the current project
+flotilla install <name> [...]    install one or more plugins
+flotilla list                    show installed plugins
+flotilla upgrade [<name>]        re-resolve + recompose (defaults to all)
+flotilla remove <name>           uninstall (un-compose, optionally pip-uninstall)
+flotilla sync                    make on-disk state match .flotilla/manifest.yaml
+flotilla validate <repo-path>    check a plugin's flotilla.yaml is valid
+flotilla doctor                  diagnose missing files / broken state
+
+flotilla search                  (Phase 2 — deferred)
+flotilla info                    (Phase 2 — deferred)
 ```
+
+## Installing on Windows
+
+Flotilla defaults to **copying** files (not symlinking) on Windows
+because reliable symlinks need admin or developer mode. POSIX systems
+default to symlinks. You can override either default in
+`.flotilla/config.yaml`:
+
+```yaml
+link_mode: symlink   # or "copy" or "auto" (the default — picks per-OS)
+```
+
+The cost of copy-mode is that `flotilla upgrade` has to re-walk every
+contributed file. The benefit is no permission elevation, no surprises.
+
+## Phase 1 trust model
+
+`flotilla install <name>` only resolves names against a **curated
+registry** in this release: `hopewell`, `pedia`, `mercator`,
+`slim-agents`. Any other name fails with a friendly error pointing at
+`--source <url-or-path>` for explicit third-party installs.
+
+Phase 2 will add a published index (`flotilla search`), a richer info
+surface (`flotilla info`), and a signed-manifest story for plugins
+distributed by parties other than the curator. Phase 1 is deliberately
+narrow so the install surface stays auditable.
+
+**Be cautious with `--source`.** A plugin's `on_install` steps run
+arbitrary shell commands as you. Until signed plugins ship in Phase 3,
+treat third-party plugin manifests like a `curl | bash` — read them
+first, especially the `on_install` block.
+
+## Layout in a consuming project
+
+```
+my-project/
+├── .flotilla/
+│   ├── manifest.yaml        # which plugins this project wants
+│   ├── config.yaml          # how to compose them (link mode, cache dir)
+│   ├── installed.json       # what's currently installed (machine-managed)
+│   └── cache/               # agent-pack plugins cloned here
+├── .claude/
+│   ├── agents/              # contributed by various plugins
+│   ├── commands/
+│   ├── skills/
+│   └── settings.json        # hooks + MCP merged from plugins (fenced under flotilla:managed)
+└── ...
+```
+
+Anything you put in `.claude/` that Flotilla didn't place is preserved.
+The `flotilla:managed` sentinel inside `settings.json` fences off the
+plugin contributions so a manual edit to a hook outside the fence
+survives upgrades.
+
+## Examples
+
+The `examples/` directory contains a fully wired sample project:
+
+- [`examples/notes-cli/`](examples/notes-cli/) — the original Flotilla
+  starter kit (a tiny notes CLI + Hopewell + Pedia + Mercator + the
+  slim-agent bundle). Useful as a reference layout when authoring your
+  own plugin or wiring up a new project.
+
+## Design background
+
+The full design rationale (manifest schema, composition strategy,
+Windows trade-offs, security posture, deferred items) lives in
+[`patterns/drafts/flotilla-plugin-design.md` in AgentFactory](https://github.com/ocgully/AgentFactory/blob/main/patterns/drafts/flotilla-plugin-design.md).
+That draft is the long-form version of this README.
 
 ## Links
 
-- [Hopewell](https://github.com/ocgully/Hopewell)
-- [Pedia](https://github.com/ocgully/pedia)
-- [Mercator](https://github.com/ocgully/mercator)
+- [Hopewell](https://github.com/ocgully/Hopewell) — work ledger
+- [Pedia](https://github.com/ocgully/pedia) — knowledge base
+- [Mercator](https://github.com/ocgully/mercator) — codemap
+- [flotilla-slim-agents](https://github.com/ocgully/flotilla-slim-agents) — bare-bones AIDLC roster

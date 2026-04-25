@@ -2,90 +2,77 @@
 
 ## Project posture
 
-Flotilla is an AI-native SDLC **starter kit**. The notes CLI domain is
-deliberately trivial (~230 LOC, stdlib-only); what you're meant to study is the
-tooling trio around it. Keep the agent set minimal and the loops obvious.
+Flotilla is the **plugin marketplace CLI** for AI-native projects. Its
+job is to install plugins (each one a git repo or pip package) and
+compose their contributions — agents, skills, commands, hooks, MCP
+servers — into a consumer project's `.claude/`.
 
-## Tools in use
+The CLI itself lives under `flotilla/`. The original notes-CLI starter
+kit content has been moved to `examples/notes-cli/` and is preserved as
+a worked example. Fresh projects bootstrap with
+`flotilla init && flotilla install hopewell pedia mercator slim-agents`.
 
-| Tool | Store | How to query |
-|------|-------|---------------|
-| Hopewell | `.hopewell/` | **CLI only** — `hopewell list`, `hopewell show`, `hopewell query ...`. Never read files here directly. |
-| Pedia | `.pedia/` | **CLI only** — `pedia query "..."`, `pedia show --for HW-NNNN`, `pedia trace <block>`. |
-| Mercator | `.mercator/` | **CLI only** — `mercator query systems`, `mercator query touches <path>`, `mercator query contract <sys>`. |
+## Layout
 
-Install the trio once: `pip install mercator hopewell pedia`.
-
-## Agent roster
-
-Six slim agents live in `.claude/agents/`:
-
-- `@architect` — structural decisions + ADRs + boundaries
-- `@engineer` — implementation within the boundaries
-- `@planner` — spec authoring (`pedia spec new` is the primary path)
-- `@testing-qa` — tests + fitness checks + boundary gate
-- `@release-engineer` — gitflow + release cutting via `hopewell release`
-- `@orchestrator` — routes work through the Hopewell flow network
-
-Extend by dropping your own domain agents alongside the core six. There is no
-bundler — `.claude/agents/` is maintained per-project.
-
-## Orchestrator-first routing
-
-**Every Claude Code request in this project routes through `@orchestrator` by default.** The
-SessionStart hook (installed by `scripts/bootstrap.sh`) injects a preamble to every fresh
-session reminding it of this convention.
-
-- Canonical entry points: `/o <request>` and `/orchestrate <request>`
-- `@orchestrator` composes the Hopewell + Pedia + Mercator context bundle and dispatches to
-  the right specialist with full context — so the specialist never re-discovers state
-- If you want to bypass (you know the exact specialist + have the context), pass `--direct`
-- If a specialist agent is invoked directly for substantive work, it redirects to
-  `@orchestrator` unless `--direct` was passed
-
-This discipline is the difference between coherent multi-session output and the "why did
-Claude forget what we just decided" feeling. Skipping the orchestrator is the most common
-cause of that gap.
-
-## Hook-driven invariants
-
-Once `scripts/bootstrap.sh` runs, the following are enforced automatically:
-
-- **commit-msg** — every commit references `HW-NNNN` (merges and fixups excepted)
-- **pre-commit** — spec drift blocks the commit; resolve via `hopewell reconcile`
-- **post-commit** — Mercator + Pedia incremental refresh; Hopewell event recorded
-- **pre-push** — on `release/*` branches, release-score must meet threshold
-
-Do not pass `--no-verify` unless you are fixing a broken hook. If a hook blocks
-you, surface the message — don't bypass it.
-
-## Query flows (how an agent starts a task)
-
-```bash
-hopewell resume                           # what am I working on?
-hopewell ready                            # what's ready to pick up?
-hopewell show HW-0006                     # what does this entail?
-pedia show --for HW-0006                  # specs + decisions cited by this node
-mercator query touches notes/store.py     # where does this file live?
-mercator query contract notes             # what's public vs internal?
-pedia query "small fast notes"            # prior art
+```
+flotilla/
+├── flotilla/              # the CLI package itself
+│   ├── cli.py             # argparse entry — dispatches to commands/
+│   ├── commands/          # one module per sub-command
+│   ├── manifest.py        # flotilla.yaml parser/validator (both shapes)
+│   ├── compose.py         # copy/symlink + settings.json merge
+│   ├── resolve.py         # pip + git-clone plugin resolution
+│   ├── installed.py       # .flotilla/installed.json read/write
+│   ├── registry.py        # Phase 1 curated plugin registry
+│   ├── config.py          # .flotilla/config.yaml (link mode etc.)
+│   └── paths.py           # ProjectPaths + project-root discovery
+├── tests/                 # pytest unit + e2e tests
+├── docs/
+│   └── authoring-plugins.md
+├── examples/
+│   └── notes-cli/         # the original starter kit, preserved
+└── README.md
 ```
 
-## Session resume protocol
+## Working on the CLI
 
-1. **Session start** — `hopewell resume`
-2. **Mid-work pause** — `hopewell checkpoint HW-NNNN --next "..."`
-3. **Session end** — include `fixes HW-NNNN` in your commit message, or
-   `hopewell close HW-NNNN --commit <sha> --reason "..."`.
+- All sub-commands take an `argparse.Namespace` and return an int exit
+  code. Tests drive them by constructing the Namespace directly — no
+  argv re-parsing in tests.
+- Manifest parsing falls back to a tiny built-in YAML loader when
+  PyYAML is absent; both code paths are tested in `tests/test_manifest.py`.
+- Composition is idempotent. Re-running `install` for the same
+  plugin/version produces identical on-disk state.
+- The `flotilla:managed` sentinel inside `.claude/settings.json` fences
+  off plugin contributions. User-authored entries outside the fence are
+  preserved across upgrade/uninstall cycles.
 
-## Multi-tool note
+## Trust model (Phase 1)
 
-Codex and OpenCode read [`AGENTS.md`](AGENTS.md). The three CLIs are the source
-of truth across harnesses — any tool that can spawn a shell can participate.
-See [`docs/multi-tool.md`](docs/multi-tool.md) for side-by-side commands.
+Bare-name installs (`flotilla install hopewell`) only succeed for the
+curated registry in `flotilla/registry.py`. Third-party plugins must be
+installed with an explicit `--source <url-or-path>`. There is no
+signing yet — `on_install` runs arbitrary shell. Document any
+trust-elevating steps clearly in plugin READMEs.
 
-## Never read `.hopewell/`, `.pedia/`, or `.mercator/` directly
+## Test posture
 
-These stores are managed by their CLIs. Browsing them by hand defeats the point
-(token cost + non-determinism) and violations surface in review as "you read
-`.hopewell/` — please re-do via the CLI."
+- Unit tests per sub-command — `tests/test_cmd_<name>.py`.
+- Manifest validation tests — `tests/test_manifest.py`.
+- End-to-end test installing Hopewell as a real pip plugin —
+  `tests/test_e2e_hopewell.py` (slow, marked accordingly).
+
+Run the full suite with `python -m pytest`.
+
+## Phase 2 hooks
+
+Already wired but not implemented:
+
+- `flotilla search` — surface a registry index
+- `flotilla info` — richer plugin info (README + reviews)
+- `requires:` SAT-solving across plugin dependencies
+- `.flotilla/resolved.lock` for reproducibility
+
+When picking these up, keep the same architectural posture: small
+sub-command modules, tests via Namespace-driven dispatch, no argv
+parsing inside the handlers.
