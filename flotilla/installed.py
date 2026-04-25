@@ -37,10 +37,34 @@ class InstalledDB:
         self.plugins[plugin.name] = plugin
 
     def remove(self, name: str) -> InstalledPlugin | None:
-        return self.plugins.pop(name, None)
+        canon = self._canonical_name(name)
+        return self.plugins.pop(canon, None) if canon else None
 
     def get(self, name: str) -> InstalledPlugin | None:
-        return self.plugins.get(name)
+        canon = self._canonical_name(name)
+        return self.plugins.get(canon) if canon else None
+
+    def _canonical_name(self, name: str) -> str | None:
+        """Resolve a possibly-legacy plugin name to the canonical key
+        in this DB. Returns None if no installed plugin matches.
+
+        Lookup order:
+          1. direct match on installed-plugin name
+          2. registry alias resolution (e.g. ``hopewell`` -> ``taskflow``)
+        """
+        if name in self.plugins:
+            return name
+        # Defer the registry import to avoid a top-level cycle.
+        try:
+            from flotilla.registry import lookup
+        except ImportError:
+            return None
+        known = lookup(name)
+        if known is None:
+            return None
+        if known.name in self.plugins:
+            return known.name
+        return None
 
 
 def load_db(path: Path) -> InstalledDB:

@@ -26,6 +26,6 @@ def cmd_init(args: argparse.Namespace) -> int:
     print(f"  manifest: {project.manifest}")
     print(f"  config:   {project.config}")
     print(
-        "Next: `flotilla install <plugin>` (try hopewell, pedia, mercator, slim-agents)"
+        "Next: `flotilla install <plugin>` (try taskflow, pedia, codeatlas, diffsextant, slim-agents)"
     )
     return 0

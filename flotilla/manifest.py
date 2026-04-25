@@ -302,6 +302,11 @@ class PluginManifest:
     on_uninstall: list[str] = field(default_factory=list)
     requires: list[str] = field(default_factory=list)
     tags: list[str] = field(default_factory=list)
+    aliases: list[str] = field(default_factory=list)
+    """Legacy plugin names this manifest also answers to. Used during
+    rebrands: a consumer's ``flotilla.yaml`` referring to the old
+    name resolves through ``aliases`` to the new manifest. Each alias
+    follows the same naming rules as ``name``."""
     source_path: Path | None = None
     """Path to the manifest file this was loaded from (None if synthesized)."""
 
@@ -385,6 +390,12 @@ def parse_plugin_manifest(text: str, source: Path | None = None) -> PluginManife
     on_uninstall = _str_list(raw.get("on_uninstall"), "on_uninstall", source)
     requires = _str_list(raw.get("requires"), "requires", source)
     tags = _str_list(raw.get("tags"), "tags", source)
+    aliases = _str_list(raw.get("aliases"), "aliases", source)
+    for a in aliases:
+        if not _NAME_RE.match(a):
+            raise ManifestError(
+                f"{_loc(source)}: alias {a!r} must match [a-z][a-z0-9_-]*"
+            )
 
     return PluginManifest(
         name=name,
@@ -399,6 +410,7 @@ def parse_plugin_manifest(text: str, source: Path | None = None) -> PluginManife
         on_uninstall=on_uninstall,
         requires=requires,
         tags=tags,
+        aliases=aliases,
         source_path=source,
     )
 

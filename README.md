@@ -8,13 +8,21 @@ servers) into your project's `.claude/` directory.
 ```bash
 pip install flotilla
 flotilla init
-flotilla install hopewell pedia mercator slim-agents
+flotilla install taskflow pedia codeatlas diffsextant slim-agents
 ```
 
-That's it. Your project now has the four canonical Flotilla tools wired
-in — work ledger, knowledge base, codemap, and a slim 6-agent bundle —
+That's it. Your project now has the canonical Flotilla tools wired in
+— work ledger (taskflow), knowledge base (pedia), codemap (codeatlas),
+semantic-diff classifier (diffsextant), and a slim 6-agent bundle —
 each pinned to a version, each upgradeable independently with
 `flotilla upgrade`, each removable cleanly with `flotilla remove`.
+
+> **Renames (April 2026).** The plugins formerly known as `hopewell`,
+> `mercator`, and `sextant` were renamed to `taskflow`, `codeatlas`,
+> and `diffsextant` respectively. Flotilla resolves the legacy names
+> via the `aliases:` mechanism (in the registry + in plugin manifests),
+> so `flotilla install hopewell` continues to work and installs the
+> taskflow plugin transparently.
 
 ## What is a plugin?
 

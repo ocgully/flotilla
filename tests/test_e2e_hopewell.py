@@ -61,20 +61,24 @@ def test_install_hopewell_end_to_end(tmp_project: Path):
     hw_cmd = tmp_project / ".claude" / "commands" / "hw.md"
     assert hw_cmd.exists()
 
-    # Hooks merged
+    # Hooks merged. After the rebrand the manifest's canonical name is
+    # `taskflow`; installing via the legacy alias `hopewell` records under
+    # the new canonical key. Either name in the managed map satisfies us.
     settings_path = tmp_project / ".claude" / "settings.json"
     settings = json.loads(settings_path.read_text(encoding="utf-8"))
     assert "flotilla:managed" in settings
-    assert "hopewell" in settings["flotilla:managed"]
+    managed = settings["flotilla:managed"]
+    assert ("taskflow" in managed) or ("hopewell" in managed)
     assert "hooks" in settings
     assert "SessionStart" in settings["hooks"]
 
-    # installed.json records the install
+    # installed.json records the install (under the canonical name post-rebrand).
     db = json.loads(
         (tmp_project / ".flotilla" / "installed.json").read_text(encoding="utf-8")
     )
-    assert "hopewell" in db["plugins"]
-    assert db["plugins"]["hopewell"]["kind"] == "tool"
+    plugin_key = "taskflow" if "taskflow" in db["plugins"] else "hopewell"
+    assert plugin_key in db["plugins"]
+    assert db["plugins"][plugin_key]["kind"] == "tool"
 
     # `flotilla list` shows it
     rc = cmd_list(argparse.Namespace(format="json"))
@@ -106,7 +110,10 @@ def test_remove_hopewell_cleans_up(tmp_project: Path):
     settings = json.loads(
         (tmp_project / ".claude" / "settings.json").read_text(encoding="utf-8")
     )
-    assert "hopewell" not in settings.get("flotilla:managed", {})
+    managed = settings.get("flotilla:managed", {})
+    # After remove neither the legacy nor the new canonical key remains.
+    assert "hopewell" not in managed
+    assert "taskflow" not in managed
     db = json.loads(
         (tmp_project / ".flotilla" / "installed.json").read_text(encoding="utf-8")
     )

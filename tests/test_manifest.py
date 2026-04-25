@@ -67,6 +67,48 @@ def test_plugin_manifest_full():
     assert m.tags == ["ledger"]
 
 
+def test_plugin_manifest_aliases():
+    """The `aliases:` list lets a renamed plugin keep answering to its
+    legacy names so consumers' existing manifests don't break."""
+    text = (
+        "name: taskflow\n"
+        "version: 0.17.0\n"
+        "kind: tool\n"
+        "aliases:\n"
+        "  - hopewell\n"
+        "python_package:\n"
+        "  name: taskflow\n"
+    )
+    m = parse_plugin_manifest(text)
+    assert m.aliases == ["hopewell"]
+    # Default when omitted is an empty list.
+    text_no_aliases = (
+        "name: pedia\n"
+        "version: 0.3.0\n"
+        "kind: tool\n"
+        "python_package:\n"
+        "  name: pedia\n"
+    )
+    m2 = parse_plugin_manifest(text_no_aliases)
+    assert m2.aliases == []
+
+
+def test_registry_lookup_resolves_aliases():
+    """`flotilla install hopewell` must continue to resolve to the new
+    `taskflow` plugin during the deprecation window."""
+    from flotilla.registry import lookup
+    direct = lookup("taskflow")
+    via_alias = lookup("hopewell")
+    assert direct is not None
+    assert via_alias is direct  # same KnownPlugin object
+    # Same for the codeatlas / mercator pair
+    assert lookup("mercator") is lookup("codeatlas")
+    # And diffsextant / sextant
+    assert lookup("sextant") is lookup("diffsextant")
+    # Unknown name still returns None
+    assert lookup("totally-not-real") is None
+
+
 def test_plugin_manifest_rejects_bad_name():
     with pytest.raises(ManifestError):
         parse_plugin_manifest("name: 9bad\nversion: 0.1.0\n")
