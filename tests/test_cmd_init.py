@@ -23,16 +23,16 @@ def test_init_idempotent(tmp_project: Path):
     cmd_init(args)
     # Edit the manifest and re-run without --force; it should be preserved.
     manifest = tmp_project / ".flotilla" / "manifest.yaml"
-    manifest.write_text("plugins:\n  - name: hopewell\n", encoding="utf-8")
+    manifest.write_text("plugins:\n  - name: taskflow\n", encoding="utf-8")
     cmd_init(args)
-    assert "hopewell" in manifest.read_text(encoding="utf-8")
+    assert "taskflow" in manifest.read_text(encoding="utf-8")
 
 
 def test_init_force_overwrites(tmp_project: Path):
     args = argparse.Namespace(path=str(tmp_project), force=False)
     cmd_init(args)
     manifest = tmp_project / ".flotilla" / "manifest.yaml"
-    manifest.write_text("plugins:\n  - name: hopewell\n", encoding="utf-8")
+    manifest.write_text("plugins:\n  - name: taskflow\n", encoding="utf-8")
     args = argparse.Namespace(path=str(tmp_project), force=True)
     cmd_init(args)
-    assert "hopewell" not in manifest.read_text(encoding="utf-8")
+    assert "taskflow" not in manifest.read_text(encoding="utf-8")

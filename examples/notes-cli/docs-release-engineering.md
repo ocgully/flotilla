@@ -1,36 +1,36 @@
 # Release engineering
 
-This project ships with the full Hopewell git-hook stack
-(`hopewell hooks install --full`). That means:
+This project ships with the full TaskFlow git-hook stack
+(`taskflow hooks install --full`). That means:
 
 ## The hook chain
 
 | Hook | Purpose | What blocks |
 |------|---------|-------------|
-| `pre-commit` | Drift detection; Mercator boundary check | Spec drift without a reconcile; boundary violations at error severity |
+| `pre-commit` | Drift detection; CodeAtlas boundary check | Spec drift without a reconcile; boundary violations at error severity |
 | `commit-msg` | Require an `HW-NNNN` reference in non-merge, non-fixup commits | Missing HW-ref |
-| `post-commit` | Hopewell event (auto-touch / auto-close on `fixes HW-NNNN`); Mercator + Pedia incremental refresh | — (advisory) |
+| `post-commit` | TaskFlow event (auto-touch / auto-close on `fixes HW-NNNN`); CodeAtlas + Pedia incremental refresh | — (advisory) |
 | `pre-push` | On a `release/*` branch, compute the release confidence score; block if below threshold | Score below threshold |
 
 ## Cutting a release
 
 ```bash
 # 1. Declare the release and scope
-hopewell release start v0.2.0 --scope HW-0006,HW-0007
+taskflow release start v0.2.0 --scope HW-0006,HW-0007
 
 # 2. Get the current confidence score
-hopewell release score
+taskflow release score
 
 # 3. (Optional) Generate a report
-hopewell release report
+taskflow release report
 
 # 4. Finalise
-hopewell release finalize
+taskflow release finalize
 ```
 
 ## Auto-enforced routes
 
-The flow network (see `hopewell network show`) distinguishes between routes
+The flow network (see `taskflow network show`) distinguishes between routes
 that require orchestrator judgment and routes that are automated. The
 following routes in this project are marked `auto_enforced: true`:
 
@@ -42,7 +42,7 @@ following routes in this project are marked `auto_enforced: true`:
 - `ci-pipeline -> @architect [on_fail]` — handled by the post-commit
   rework signal.
 
-When you open `hopewell web`, these routes render as **dashed grey** edges
+When you open `taskflow web`, these routes render as **dashed grey** edges
 to signal "no orchestrator judgment needed here — the hook has it."
 
 ## Release-score inputs
@@ -53,4 +53,4 @@ The score is computed from:
 - **UAT status** on in-scope nodes (if `needs-uat` component present)
 - **Release scope coherence** (all referenced nodes exist + reachable)
 
-See `hopewell release score --format json` for the breakdown.
+See `taskflow release score --format json` for the breakdown.

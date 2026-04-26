@@ -10,7 +10,7 @@ servers — into a consumer project's `.claude/`.
 The CLI itself lives under `flotilla/`. The original notes-CLI starter
 kit content has been moved to `examples/notes-cli/` and is preserved as
 a worked example. Fresh projects bootstrap with
-`flotilla init && flotilla install hopewell pedia mercator slim-agents`.
+`flotilla init && flotilla install taskflow pedia codeatlas diffsextant slim-agents`.
 
 ## Layout
 
@@ -49,18 +49,21 @@ flotilla/
 
 ## Trust model (Phase 1)
 
-Bare-name installs (`flotilla install hopewell`) only succeed for the
+Bare-name installs (`flotilla install taskflow`) only succeed for the
 curated registry in `flotilla/registry.py`. Third-party plugins must be
-installed with an explicit `--source <url-or-path>`. There is no
-signing yet — `on_install` runs arbitrary shell. Document any
-trust-elevating steps clearly in plugin READMEs.
+installed with an explicit `--source <url-or-path>`. Legacy names
+(`hopewell`, `mercator`, `sextant`) still resolve via the registry's
+`aliases:` mechanism. There is no signing yet — `on_install` runs
+arbitrary shell. Document any trust-elevating steps clearly in plugin
+READMEs.
 
 ## Test posture
 
 - Unit tests per sub-command — `tests/test_cmd_<name>.py`.
 - Manifest validation tests — `tests/test_manifest.py`.
-- End-to-end test installing Hopewell as a real pip plugin —
-  `tests/test_e2e_hopewell.py` (slow, marked accordingly).
+- End-to-end test installing TaskFlow (via its legacy `hopewell` alias)
+  as a real pip plugin — `tests/test_e2e_hopewell.py` (slow, marked
+  accordingly; filename retained because it tests alias resolution).
 
 Run the full suite with `python -m pytest`.
 

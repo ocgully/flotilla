@@ -30,25 +30,25 @@ A **Flotilla plugin** is any git repo (or pip package) that contains a
 `flotilla.yaml` manifest at the root declaring its contributions:
 
 ```yaml
-name: hopewell
-version: 0.16.0
+name: taskflow
+version: 0.17.0
 kind: tool                    # "tool" (pip) or "agent-pack" (git-clone)
 python_package:
-  name: hopewell
+  name: taskflow
 contributes:
   agents:    plugin/agents/   # drop-in .md files for Claude Code
   commands:  plugin/commands/ # /slash-command .md files
   hooks:     plugin/hooks.yaml
   mcp:       plugin/mcp.yaml
 on_install:
-  - hopewell hooks install --full --quiet
+  - taskflow hooks install --full --quiet
 ```
 
 Two install models, both supported, manifest-declared per plugin:
 
 - **Tool plugins** (`kind: tool`) — `pip install <package>`, then read
   the `flotilla.yaml` from the installed package and compose. Used by
-  Hopewell, Pedia, Mercator. Versioning is whatever pip understands.
+  TaskFlow, Pedia, CodeAtlas. Versioning is whatever pip understands.
 - **Agent-pack plugins** (`kind: agent-pack`) — `git clone` into the
   project's `.flotilla/cache/`, check out the requested ref, then
   compose. Used by `slim-agents` and any pure-markdown plugin.
@@ -89,9 +89,10 @@ contributed file. The benefit is no permission elevation, no surprises.
 ## Phase 1 trust model
 
 `flotilla install <name>` only resolves names against a **curated
-registry** in this release: `hopewell`, `pedia`, `mercator`,
-`slim-agents`. Any other name fails with a friendly error pointing at
-`--source <url-or-path>` for explicit third-party installs.
+registry** in this release: `taskflow`, `pedia`, `codeatlas`,
+`diffsextant`, `slim-agents`. Any other name fails with a friendly
+error pointing at `--source <url-or-path>` for explicit third-party
+installs.
 
 Phase 2 will add a published index (`flotilla search`), a richer info
 surface (`flotilla info`), and a signed-manifest story for plugins
@@ -130,7 +131,7 @@ survives upgrades.
 The `examples/` directory contains a fully wired sample project:
 
 - [`examples/notes-cli/`](examples/notes-cli/) — the original Flotilla
-  starter kit (a tiny notes CLI + Hopewell + Pedia + Mercator + the
+  starter kit (a tiny notes CLI + TaskFlow + Pedia + CodeAtlas + the
   slim-agent bundle). Useful as a reference layout when authoring your
   own plugin or wiring up a new project.
 
@@ -143,7 +144,8 @@ That draft is the long-form version of this README.
 
 ## Links
 
-- [Hopewell](https://github.com/ocgully/Hopewell) — work ledger
+- [TaskFlow](https://github.com/ocgully/taskflow) — work ledger
 - [Pedia](https://github.com/ocgully/pedia) — knowledge base
-- [Mercator](https://github.com/ocgully/mercator) — codemap
+- [CodeAtlas](https://github.com/ocgully/codeatlas) — codemap
+- [DiffSextant](https://github.com/ocgully/diffsextant) — semantic-diff classifier
 - [flotilla-slim-agents](https://github.com/ocgully/flotilla-slim-agents) — bare-bones AIDLC roster

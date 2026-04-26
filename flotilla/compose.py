@@ -62,7 +62,7 @@ def install_plugin(
     sub-paths (i.e. the parent of the manifest's ``plugin/`` dir, since
     contribution paths are written relative to the manifest root).
     ``source_descriptor`` is a short string describing where the plugin
-    came from for record-keeping (``pip:hopewell``, etc.).
+    came from for record-keeping (``pip:taskflow``, etc.).
     """
 
     placed: list[str] = []

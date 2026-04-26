@@ -15,10 +15,10 @@ def cmd_search(args: argparse.Namespace) -> int:
     print(
         "flotilla search: deferred to Phase 2 — the marketplace index "
         "isn't published yet. In Phase 1, the curated plugins are:\n"
-        "  taskflow    — work ledger (formerly hopewell)\n"
+        "  taskflow    — work ledger\n"
         "  pedia       — knowledge base\n"
-        "  codeatlas   — codemap (formerly mercator)\n"
-        "  diffsextant — semantic-diff classifier (formerly sextant)\n"
+        "  codeatlas   — codemap\n"
+        "  diffsextant — semantic-diff classifier\n"
         "  slim-agents — bare-bones 6-role AIDLC agent bundle\n"
         "Legacy names (hopewell, mercator, sextant) still resolve via "
         "registry aliases. Install any with `flotilla install <name>`."

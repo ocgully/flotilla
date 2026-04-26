@@ -52,7 +52,7 @@ on_uninstall:
 # Cross-plugin requirements. Soft hints today; SAT-solving deferred to
 # Phase 2.
 requires:
-  - hopewell >= 0.16.0
+  - taskflow >= 0.17.0
 ```
 
 ## Where the plugin lives on disk
@@ -190,13 +190,13 @@ recomputed — user content is preserved across the cycle.
   "hooks": {
     "PreToolUse": [
       { "matcher": "user-rule" },           // user-authored — preserved
-      { "matcher": "hopewell-rule" }        // contributed by hopewell plugin
+      { "matcher": "taskflow-rule" }        // contributed by taskflow plugin
     ]
   },
   "flotilla:managed": {
-    "hopewell": {
+    "taskflow": {
       "hooks": {
-        "PreToolUse": [{ "matcher": "hopewell-rule" }]
+        "PreToolUse": [{ "matcher": "taskflow-rule" }]
       }
     }
   }
@@ -222,7 +222,7 @@ your README.
 - **Be a good citizen with names.** Agents are looked up by filename in
   `.claude/agents/`; if your plugin contributes `architect.md`, it will
   collide with another plugin's `architect.md`. Prefix with your plugin
-  name (`hopewell-scribe.md`, `pedia-keeper.md`) unless you intend to
+  name (`taskflow-scribe.md`, `pedia-keeper.md`) unless you intend to
   override.
 
 ## Phase 2 hints (heads-up only)

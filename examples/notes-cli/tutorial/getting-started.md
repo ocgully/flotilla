@@ -6,15 +6,15 @@ A ten-minute tour. Assumes you've done the 6-command quickstart in the
 ## 1. See what shipped
 
 ```bash
-hopewell list
+taskflow list
 ```
 
 You should see the seeded nodes: five closed, two open, one release.
 
 ```bash
-hopewell show HW-0001
+taskflow show HW-0001
 pedia show --for HW-0001
-mercator query systems
+codeatlas query systems
 ```
 
 ## 2. Add a note (exercise the domain)
@@ -34,7 +34,7 @@ This is the HW-0005 feature the ledger already records as closed.
 ## 3. Start a new work item
 
 ```bash
-hopewell new \
+taskflow new \
   --components work-item,deliverable,user-facing \
   --title "Export notes to JSON" \
   --priority P2
@@ -44,7 +44,7 @@ The command prints the new node id (e.g., `HW-0009`). Open the canvas and
 you'll see it appear:
 
 ```bash
-hopewell web --open
+taskflow web --open
 ```
 
 ## 4. Observe a drift block
@@ -59,15 +59,15 @@ git commit -m "HW-0003 — tighten search spec"
 The **pre-commit** hook detects the drift and blocks. Resolve:
 
 ```bash
-hopewell reconcile --accept
+taskflow reconcile --accept
 git commit -m "HW-0003 — tighten search spec"   # now passes
 ```
 
 ## 5. Cut a release
 
 ```bash
-hopewell release start v0.2.0 --scope HW-0006,HW-0007
-hopewell release score
+taskflow release start v0.2.0 --scope HW-0006,HW-0007
+taskflow release score
 # push a release branch — the pre-push hook gates on the score
 ```
 
@@ -77,11 +77,11 @@ hopewell release score
 pedia query "plain text"
 pedia trace pedia://decisions/0001-plain-text-storage.md --down
 
-mercator query contract notes
-mercator query touches notes/cli.py
+codeatlas query contract notes
+codeatlas query touches notes/cli.py
 
-hopewell ready
-hopewell resume
+taskflow ready
+taskflow resume
 ```
 
 ## Next

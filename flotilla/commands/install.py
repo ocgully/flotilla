@@ -99,7 +99,7 @@ def _run_step(step: str, cwd: Path) -> None:
     print(f"flotilla: running on_install: {step}")
     try:
         if os.name == "nt":
-            # Use shell on Windows so bare hopewell/pedia entrypoints resolve.
+            # Use shell on Windows so bare taskflow/pedia entrypoints resolve.
             subprocess.run(step, cwd=cwd, shell=True, check=False)
         else:
             subprocess.run(shlex.split(step), cwd=cwd, check=False)

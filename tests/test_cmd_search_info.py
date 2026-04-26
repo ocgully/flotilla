@@ -12,14 +12,18 @@ def test_search_stub_message(capsys):
     assert rc == 0
     out = capsys.readouterr().out
     assert "deferred to Phase 2" in out
-    assert "hopewell" in out and "pedia" in out and "mercator" in out
+    assert "taskflow" in out and "pedia" in out and "codeatlas" in out
+    # Legacy aliases still surface so users hitting old docs find the path.
+    assert "hopewell" in out and "mercator" in out
 
 
 def test_info_known_plugin(capsys):
+    # `info` resolves legacy aliases through the registry, so calling
+    # with the old name still surfaces the (renamed) canonical plugin.
     rc = cmd_info(argparse.Namespace(name="hopewell"))
     assert rc == 0
     out = capsys.readouterr().out
-    assert "hopewell" in out
+    assert "taskflow" in out or "hopewell" in out
     assert "tool" in out
 
 
